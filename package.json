@@ -1,0 +1,19 @@
+{
+  "name": "git-sauce",
+  "version": "1.0.0",
+  "description": "A tool to simplify git processes",
+  "main": "Git-sauce.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Dannys-notepad/git-sauce.git"
+  },
+  "author": "Daniel",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Dannys-notepad/git-sauce/issues"
+  },
+  "homepage": "https://github.com/Dannys-notepad/git-sauce#readme"
+}
