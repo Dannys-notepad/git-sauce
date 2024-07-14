@@ -1,128 +1,75 @@
-/*Git-sauce v1.0*/
+/*Git-sauce v2.0*/
 /*From Dannys-notepad*/
-/*Termix version*/
+/*For Termux/Andriod users only*/
 
 const fs = require('fs')
-const path = require('path')
-const readline = require("readline");
-const { exec } = require("child_process");
 
-const config = require("./config");
+const config = require('./config')
+const repoName = config[0].nameOfRepository
 const filePath = config[0].path
+const OS = process.config.variables.OS
 
-const rl = readline.createInterface({
-  input: process.stdin,
-  output: process.stdout,
-});
+const gitFolder = '.git'
 
+const { asyncExec, checkOS, ask } = require('./modules/promises')
+  const { changeDir, gitInit, pushToRepo } = require('./modules/controller')
 
-function subProcess2(nameOfRepository){
-  const accessToken = config[0].accessToken
-  const userName = config[0].userName
-  const githubLink = config[0].githubLink + userName
-  const tempRepo = githubLink.replace('[]', accessToken)
-  
-  const repoUrl = tempRepo + '/' + nameOfRepository
-  
-  exec(`git remote add ${nameOfRepository} ${repoUrl}`, (error, stdout, stderr) => {
-    if(error){
-      console.log(error)
-    }else{
-      exec(`git branch -m ${config[0].branch}`, (error, stdout, stderr) => {
-        if(error){
-          console.log(error)
-        }else{
-          exec(`git commit -m "${config[0].commitMessage}"`, (error, stdout, stderr) => {
-            if(error){
-              console.log(error)
-            }else{
-              exec(`git push -u ${nameOfRepository} main`, (error, stdout, stderr) => {
-                if(error){
-                  console.log(error)
-                }else{
-                  console.log(stdout)
-                  console.log(`Successfully pushed to repo ${nameOfRepository}`)
-                }
-              })
-            }
-          })
-        }
-      })
+const subProcess1 = async () => {
+  try {
+    const gitVersion = await asyncExec('git -v')
+    console.log(gitVersion)
+    if(!fs.existsSync(gitFolder)){
+      await gitInit()
+      //console.log('Current git status is....')
+      //await asyncExec('git status')
     }
-  })
+  }catch (e) {
+    console.error(e)
+  }
 }
 
-//function to initialize git
-function subProcess1() {
-  exec("git -v", (error, stdout, stderr) => {
-    if (error) {
-      exec("apt install git", (error, stdout, stderr) => {
-        if (error) {
-          console.log(error)
-        }
-      })
-    }
-    exec(`git init`, (error, stdout, stderr) => {
-      if (error) {
-        console.log(error)
+const subProcess2 = async () => {
+  try{
+    await pushToRepo()
+  } catch (e) {
+    console.error(e)
+  }
+}
+
+const startScript = async () => {
+  console.clear()
+  const start = await checkOS(process.config.variables.OS)
+  if(start){
+    console.log('Script Started')
+    const changedir = await changeDir()
+    if(changedir){
+      await subProcess1()
+      console.log('Welcome to Git-sauce v2.0')
+      console.log(`/*****${filePath}*****/\n`)
+      console.log(' 1. Push to remote repo\n 2. Delete remote repo \n')
+      let askQue = await ask('What git operation would you like to try out')
+      switch(+askQue){
+        case 1:
+          await subProcess2()
+          process.exit()
+          break
+        case 2:
+          console.log('>_< this feature is under development')
+          process.exit()
+          break
+        default:
+          console.log('Oops...you entered an invalid input, try again')
+          process.exit()
       }
-      exec(
-        `git config --add user.email "${config[0].userEmail}"`,
-        (error, stdout, stderr) => {
-          if (error) {
-            console.log(error)
-          }
-          exec(
-            `git config --add user.name "${config[0].userName}"`,
-            (error, stdout, stderr) => {
-              if (error) {
-                console.log(error)
-              }
-              exec(`git add .`, (error, stdout, stderr) => {
-                if(error){
-                  console.log(error)
-                }
-              })
-            }
-          )
-        }
-      )
-    })
-  })
-}
+    } else {
+      console.log(`The directory ${filePath} does not exist, recheck the path specified in the config file`)
+      process.exit(0)
+    }
 
-function changeDir(dir){
-  
-  if (fs.existsSync(dir)) {
-    process.chdir(dir)
-    
-    console.log(`Current path is ${filePath}`)
-    console.log("•~• welcome! to Git-sauce")
-    console.log(`What do you wanna do? \n 1. Push to a repository\n 2. Delete a repository\n`)
-  
-   rl.question("~> ", (answer) => {
-     switch (Number(answer)) {
-       case 1:
-         console.log(`You are about to push to repository ${config[0].nameOfRepository}`)
-         subProcess1()
-         subProcess2(config[0].nameOfRepository)
-         break;
-      
-       case 2:
-         console.log('Feature is still under development')
-         break;
-    
-      default:
-         console.log("Invalid response")
-  }
-  rl.close()
-})
   }else{
-    console.error(`Directory ${filePath} does not exist, recheck the path provided in ths config file`)
+    console.error('Sorry you\'re not an Andriod user')
+    process.exit()
   }
-
 }
 
-changeDir(filePath)
-
-
+startScript()
