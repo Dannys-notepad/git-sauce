@@ -20,8 +20,6 @@ const subProcess1 = async () => {
     console.log(gitVersion)
     if(!fs.existsSync(gitFolder)){
       await gitInit()
-      //console.log('Current git status is....')
-      //await asyncExec('git status')
     }
   }catch (e) {
     console.error(e)
@@ -45,8 +43,8 @@ const startScript = async () => {
     if(changedir){
       await subProcess1()
       console.log('Welcome to Git-sauce v2.0')
-      console.log(`/*****${filePath}*****/\n`)
-      console.log(' 1. Push to remote repo\n 2. Delete remote repo \n')
+      console.log(`/%%%%%%${filePath}%%%%%%/\n`)
+      console.log(' 1. Push to remote repo')
       let askQue = await ask('What git operation would you like to try out')
       switch(+askQue){
         case 1:

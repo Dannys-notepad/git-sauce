@@ -19,7 +19,6 @@ const changeDir = async () => {
     if(pathExits){
       process.chdir(filePath)
       return true
-      //console.log(true)
     }
   } catch (e) {
     console.error(e)
@@ -33,7 +32,6 @@ const gitInit = async () => {
     await asyncExec('git init')
     await asyncExec(`git config --global user.email ${userEmail}`)
     await asyncExec(`git config --global user.name ${userName}`)
-    //await asyncExec(`git config --global init.defaultBranch master`)
     await asyncExec(`git branch -m ${config[0].branch}`)
     await asyncExec(`git remote add origin ${repoName}`)
     await asyncExec('git add .')
