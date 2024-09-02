@@ -47,30 +47,8 @@ const ask = async (que) => {
   })
 }
 
-/*
-const checkEmptyDir = (filePath) => {
-  return new Promise((resolve, reject) => {
-    fs.readdir(filePath, (err, files) => {
-      if(err){
-        reject(err)
-      }else{
-        if(files.length-1 === 0){
-          reject(isEmpty)
-        }else{
-          isEmpty = true
-          resolve(isEmpty)
-        }
-      }
-    })
-  }).catch((err) => {
-    return err
-  })
-}
-*/
-
 module.exports = {
   checkOS,
   asyncExec,
   ask,
-  //checkEmptyDir
 }
