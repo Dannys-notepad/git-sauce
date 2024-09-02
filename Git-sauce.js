@@ -1,4 +1,4 @@
-/*Git-sauce v2.0*/
+/*Git-sauce v1.2.2*/
 /*From Dannys-notepad*/
 /*For Termux/Andriod users only*/
 
@@ -42,7 +42,7 @@ const startScript = async () => {
     const changedir = await changeDir()
     if(changedir){
       await subProcess1()
-      console.log('Welcome to Git-sauce v2.0')
+      console.log('Welcome to Git-sauce v1.2.2')
       console.log(`/%%%%%%${filePath}%%%%%%/\n`)
       console.log(' 1. Push to remote repo')
       let askQue = await ask('What git operation would you like to try out')
