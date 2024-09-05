@@ -1,17 +1,17 @@
 {
   "name": "git-sauce",
-  "version": "1.2.2",
+  "version": "2.0.0",
   "description": "A tool to simplify git processes",
-  "main": "Git-sauce.js",
+  "main": "./bin/git-sauce.js",
   "scripts": {
-    "start": "node Git-sauce.js"
+    "start": "node ./bin/git-sauce.js"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Dannys-notepad/git-sauce.git"
   },
   "author": "Daniel",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/Dannys-notepad/git-sauce/issues"
   },

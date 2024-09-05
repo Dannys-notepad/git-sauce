@@ -1,7 +1,7 @@
 [
   {
-    "userEmail": "your email address here",
-    "userName": "Your username here",
+    "userEmail": "your email here",
+    "userName": "Your name here",
       "path": "../path/to/project/location",
     "githubLink": "https://[]@github.com/",
     "accessToken": "git access token here",
