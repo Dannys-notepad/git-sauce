@@ -1,11 +1,13 @@
+const formatStatus = require('../utils/formatStatus.js')
+
 /*
   Git-sauce v2.0.0
   from Dannysnotepad
  */
- 
- const { exec } = require('child_process')
- 
- //Commands
+
+const { exec } = require('child_process')
+
+//Commands
 const gitInit = require('../lib/commands/gitInit.js')
 const pullRefs = require('../lib/commands/pullChanges.js')
 const watch = require('../lib/commands/watcher.js')
@@ -41,7 +43,6 @@ const repeatText = (text) => {
   return text.repeat(repeatCount)
 }
 
-
 const startGitSauce = async () => {
   console.clear()
   let gitInstalled = await checkGit()
@@ -65,7 +66,7 @@ const startGitSauce = async () => {
       console.log('[*] lazyrepo    Creates a remote repository with entered data\n')
       console.log('[*] delete      Deletes a remote repository\n')
       console.log('[*] exit        Exits the program\n')
-      
+
       while(true){
         let command = await ask('Enter a command')
         switch (command) {
@@ -76,7 +77,7 @@ const startGitSauce = async () => {
           case 'status':
             console.log('checking stats....')
             let stat = await asyncExec('git status')
-            console.log(stat)
+            console.log(formatStatus(stat))
             break
           case 'pull':
             console.log('pulling....')
